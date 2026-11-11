@@ -1,0 +1,2 @@
+overrides:
+  '@flinthuynh/ffmpeg-wasm': link:..

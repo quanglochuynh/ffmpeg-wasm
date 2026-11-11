@@ -1,0 +1,26 @@
+{
+  "name": "ffmpeg-wasm-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "bash -c 'source ../../emsdk/emsdk_env.sh && pnpm --dir .. build && node --experimental-strip-types index.ts && node --test metadata.test.mjs'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.18.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.18.0",
+  "type": "module",
+  "dependencies": {
+    "@flinthuynh/ffmpeg-wasm": "link:..",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2"
+  }
+}

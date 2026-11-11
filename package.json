@@ -1,0 +1,24 @@
+{
+  "name": "@flinthuynh/ffmpeg-wasm",
+  "version": "0.1.0",
+  "description": "A C++ WebAssembly project built with Emscripten",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build:wasm": "bash scripts/build.sh",
+    "build:ts": "tsc",
+    "build": "bash -c 'source ../emsdk/emsdk_env.sh && pnpm build:wasm && pnpm build:ts'",
+    "prepublishOnly": "pnpm build"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
