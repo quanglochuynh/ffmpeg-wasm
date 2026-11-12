@@ -3,6 +3,12 @@
 A C++ WebAssembly package built with Emscripten. It exports math helpers and a
 `Video` class that reads metadata and frames with FFmpeg.
 
+## Installation
+
+```sh
+npm install @flinthuynh/ffmpeg-wasm
+```
+
 ## Quickstart
 
 Requirements: Node.js, pnpm, Git, and Emscripten (`emsdk`).
@@ -58,3 +64,22 @@ reads the metadata with FFmpeg and exposes `container`, `fileSize`, `duration`, 
 and `frameRate`. `getFrame(index)` decodes the frame at that 0-based
 index (display order) with FFmpeg and returns the bytes of a JPEG image; it
 throws an `Error` if the index is out of range.
+
+## Publishing
+
+```bash
+pnpm publish
+```
+
+Before publishing, review and satisfy FFmpeg's redistribution requirements.
+The WebAssembly binary statically links FFmpeg under LGPL-2.1-or-later; in
+particular, the release must include the applicable license notices and provide
+the required source and means to relink with a modified FFmpeg. The current
+package does not yet include those materials. See
+[FFmpeg's license information](https://ffmpeg.org/legal.html).
+
+## License
+
+This project's own code is licensed under the [MIT License](./LICENSE).
+The distributed WebAssembly binary also contains FFmpeg, which is licensed
+under LGPL-2.1-or-later and includes components under other permissive licenses.

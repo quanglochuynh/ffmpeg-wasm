@@ -1,11 +1,32 @@
 {
   "name": "@flinthuynh/ffmpeg-wasm",
-  "version": "0.1.0",
-  "description": "A C++ WebAssembly project built with Emscripten",
+  "version": "0.1.0-alpha",
+  "description": "Read video metadata and extract JPEG frames with FFmpeg and WebAssembly",
+  "license": "(MIT AND LGPL-2.1-or-later)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quanglochuynh/ffmpeg-wasm.git"
+  },
+  "homepage": "https://github.com/quanglochuynh/ffmpeg-wasm#readme",
+  "bugs": {
+    "url": "https://github.com/quanglochuynh/ffmpeg-wasm/issues"
+  },
+  "keywords": [
+    "ffmpeg",
+    "wasm",
+    "webassembly",
+    "video",
+    "metadata"
+  ],
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
