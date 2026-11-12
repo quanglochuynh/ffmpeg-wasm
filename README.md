@@ -1,4 +1,4 @@
-# @flinthuynh/ffmpeg-wasm
+# @locqhuynh/ffmpeg-wasm
 
 A C++ WebAssembly package built with Emscripten. It exports math helpers and a
 `Video` class that reads metadata and frames with FFmpeg.
@@ -6,7 +6,7 @@ A C++ WebAssembly package built with Emscripten. It exports math helpers and a
 ## Installation
 
 ```sh
-npm install @flinthuynh/ffmpeg-wasm
+npm install @locqhuynh/ffmpeg-wasm
 ```
 
 ## Quickstart
@@ -46,7 +46,7 @@ The output is written to `dist/`. To use the package from JavaScript:
 
 ```js
 import { readFile, writeFile } from "node:fs/promises";
-import createModule from "@flinthuynh/ffmpeg-wasm";
+import createModule from "@locqhuynh/ffmpeg-wasm";
 
 const wasm = await createModule();
 console.log(wasm.add(2, 3)); // 5

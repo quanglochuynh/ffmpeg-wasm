@@ -1,4 +1,4 @@
-import createModule from "@flinthuynh/ffmpeg-wasm";
+import createModule from "@locqhuynh/ffmpeg-wasm";
 import { readFile, writeFile } from "node:fs/promises";
 
 const wasm = await createModule();

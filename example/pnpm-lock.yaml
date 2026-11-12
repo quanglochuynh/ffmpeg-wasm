@@ -164,12 +164,13 @@ settings:
 
 overrides:
   '@flinthuynh/ffmpeg-wasm': link:..
+  '@locqhuynh/ffmpeg-wasm': link:..
 
 importers:
 
   .:
     dependencies:
-      '@flinthuynh/ffmpeg-wasm':
+      '@locqhuynh/ffmpeg-wasm':
         specifier: link:..
         version: link:..
       '@types/node':

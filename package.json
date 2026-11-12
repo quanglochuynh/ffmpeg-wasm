@@ -1,5 +1,5 @@
 {
-  "name": "@flinthuynh/ffmpeg-wasm",
+  "name": "@locqhuynh/ffmpeg-wasm",
   "version": "0.1.0-alpha",
   "description": "Read video metadata and extract JPEG frames with FFmpeg and WebAssembly",
   "license": "(MIT AND LGPL-2.1-or-later)",

@@ -19,7 +19,7 @@
   "packageManager": "pnpm@12.18.0",
   "type": "module",
   "dependencies": {
-    "@flinthuynh/ffmpeg-wasm": "link:..",
+    "@locqhuynh/ffmpeg-wasm": "link:..",
     "@types/node": "^26.6.6",
     "typescript": "^7.0.2"
   }

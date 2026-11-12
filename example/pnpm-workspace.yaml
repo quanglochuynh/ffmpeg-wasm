@@ -1,2 +1,3 @@
 overrides:
   '@flinthuynh/ffmpeg-wasm': link:..
+  '@locqhuynh/ffmpeg-wasm': link:..
