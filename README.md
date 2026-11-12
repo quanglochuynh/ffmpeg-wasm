@@ -35,14 +35,14 @@ pnpm install
 pnpm build
 ```
 
-Run the example app to build the package and read the test video from disk:
+Run the Node.js regression tests:
 
 ```sh
 pnpm --dir example install
 pnpm --dir example test
 ```
 
-The output is written to `dist/`. To use the package from JavaScript:
+The output is written to `dist/`. To use the package from Node.js:
 
 ```js
 import { readFile, writeFile } from "node:fs/promises";
@@ -64,6 +64,38 @@ reads the metadata with FFmpeg and exposes `container`, `fileSize`, `duration`, 
 and `frameRate`. `getFrame(index)` decodes the frame at that 0-based
 index (display order) with FFmpeg and returns the bytes of a JPEG image; it
 throws an `Error` if the index is out of range.
+
+## Cloudflare Workers
+
+The `@locqhuynh/ffmpeg-wasm/cloudflare` entry point bundles a precompiled
+WebAssembly module and avoids dynamic JavaScript generation. It returns the
+same API as the default entry point. The Worker bundler must support `.wasm`
+imports as `WebAssembly.Module`, as the Cloudflare Vite plugin does.
+
+The example is a Worker that accepts raw video bytes in a POST request. Start
+it locally after building the package and installing the example dependencies:
+
+```sh
+pnpm build
+pnpm --dir example install
+pnpm --dir example dev
+```
+
+Send a video for JSON metadata, or add `?frame=1` for a JPEG:
+
+```sh
+curl --data-binary @test-data/IMG_5255.MOV http://localhost:5173/
+curl --data-binary @test-data/IMG_5255.MOV 'http://localhost:5173/?frame=1' -o frame.jpg
+```
+
+The example limits uploads to 20 MiB. It buffers the input and the C++ `Video`
+keeps another copy, so even smaller videos may exceed Workers' 128 MB isolate
+memory limit. Frame extraction is CPU-intensive and decodes from the start on
+each call. Test your own inputs against the [Workers limits](https://developers.cloudflare.com/workers/platform/limits/);
+for larger workloads, consider Cloudflare Containers with native FFmpeg.
+
+The current C++ error path can leak memory when video initialization fails.
+Do not expose the example to untrusted uploads until that is fixed.
 
 ## Publishing
 

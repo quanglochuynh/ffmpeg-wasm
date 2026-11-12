@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "bash -c 'source ../../emsdk/emsdk_env.sh && pnpm --dir .. build && node --experimental-strip-types index.ts && node --test metadata.test.mjs'"
+    "dev": "cf dev",
+    "test": "bash -c 'source ../../emsdk/emsdk_env.sh && pnpm --dir .. build && tsc && cf build && node --test metadata.test.mjs worker.test.mjs'"
   },
   "keywords": [],
   "author": "",
@@ -22,5 +23,11 @@
     "@locqhuynh/ffmpeg-wasm": "link:..",
     "@types/node": "^26.6.6",
     "typescript": "^7.0.2"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "2.0.0-beta.v.15",
+    "cf": "1.0.0-beta.29",
+    "miniflare": "5.20261110.1-beta",
+    "vite": "^8.3.8"
   }
 }

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { test } from "node:test";
-import createModule from "@flinthuynh/ffmpeg-wasm";
+import createModule from "@locqhuynh/ffmpeg-wasm";
 
 test("Video parses metadata from bytes and rejects invalid input", async () => {
   const output = [];

@@ -19,7 +19,7 @@ if [[ ! -f "$FFMPEG_DIR/lib/libavcodec.a" ]]; then
   exit 1
 fi
 
-em++ "$ROOT_DIR/src/index.cpp" -o "$ROOT_DIR/dist/index.js" \
+COMMON_FLAGS=(
   --bind \
   -I"$FFMPEG_DIR/include" \
   -L"$FFMPEG_DIR/lib" \
@@ -28,3 +28,9 @@ em++ "$ROOT_DIR/src/index.cpp" -o "$ROOT_DIR/dist/index.js" \
   -sMODULARIZE=1 \
   -sEXPORT_ES6=1 \
   -O3
+)
+
+em++ "$ROOT_DIR/src/index.cpp" -o "$ROOT_DIR/dist/index.js" "${COMMON_FLAGS[@]}"
+em++ "$ROOT_DIR/src/index.cpp" -o "$ROOT_DIR/dist/worker.js" \
+  "${COMMON_FLAGS[@]}" -sENVIRONMENT=web -sDYNAMIC_EXECUTION=0
+cp "$ROOT_DIR/src/cloudflare.js" "$ROOT_DIR/dist/cloudflare.js"

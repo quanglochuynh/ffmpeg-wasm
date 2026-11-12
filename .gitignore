@@ -6,3 +6,5 @@ frame-*.jpg
 src/index.cpp
 .DS_Store
 test-data/
+example/.cloudflare/
+example/.wrangler/
