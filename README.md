@@ -1,11 +1,11 @@
 # @flinthuynh/ffmpeg-wasm
 
 A C++ WebAssembly package built with Emscripten. It exports math helpers and a
-lightweight MOV/MP4 metadata reader.
+`Video` class that reads metadata and frames with FFmpeg.
 
 ## Quickstart
 
-Requirements: Node.js, pnpm, and Emscripten (`emsdk`).
+Requirements: Node.js, pnpm, Git, and Emscripten (`emsdk`).
 
 The build script expects `emsdk` in a sibling directory named `../emsdk`.
 From the repository root, install and activate it once:
@@ -13,6 +13,13 @@ From the repository root, install and activate it once:
 ```sh
 git clone https://github.com/emscripten-core/emsdk.git ../emsdk
 (cd ../emsdk && ./emsdk install latest && ./emsdk activate latest)
+```
+
+Build FFmpeg for WebAssembly once (clones FFmpeg into `third_party/` and
+installs a minimal build into `build/ffmpeg`; takes a few minutes):
+
+```sh
+bash scripts/build-ffmpeg.sh
 ```
 
 Install dependencies and build the package:
@@ -32,19 +39,22 @@ pnpm --dir example test
 The output is written to `dist/`. To use the package from JavaScript:
 
 ```js
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import createModule from "@flinthuynh/ffmpeg-wasm";
 
 const wasm = await createModule();
 console.log(wasm.add(2, 3)); // 5
-const video = await readFile("test-data/IMG_5255.MOV");
-if (!wasm.printVideoMetadata(video)) {
-  throw new Error("Unable to read video metadata");
-}
+const bytes = await readFile("test-data/IMG_5255.MOV");
+const video = new wasm.Video(bytes); // parses the metadata, throws on invalid data
+console.log(video.width, video.height, video.duration);
+video.printMetadata();
+const jpeg = video.getFrame(10); // Uint8Array with the JPEG file bytes of frame 10
+await writeFile("frame-10.jpg", jpeg);
+video.delete(); // free the C++ object when done
 ```
 
-`printVideoMetadata` accepts a `Uint8Array` (including a Node.js `Buffer`) and
-prints its container, duration, file size, video codec,
-resolution, and average frame rate. The lightweight parser supports ISO
-Base Media containers such as MOV/MP4; it is not a replacement for FFmpeg's
-full demuxer.
+`new Video(bytes)` accepts a `Uint8Array` (including a Node.js `Buffer`) and
+reads the metadata with FFmpeg and exposes `container`, `fileSize`, `duration`, `videoCodec`, `width`, `height`,
+and `frameRate`. `getFrame(index)` decodes the frame at that 0-based
+index (display order) with FFmpeg and returns the bytes of a JPEG image; it
+throws an `Error` if the index is out of range.

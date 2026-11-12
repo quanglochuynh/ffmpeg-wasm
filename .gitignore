@@ -1,2 +1,8 @@
 node_modules/
 dist/
+third-party/third_party/
+build/
+frame-*.jpg
+src/index.cpp
+.DS_Store
+test-data/

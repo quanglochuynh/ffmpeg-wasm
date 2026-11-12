@@ -13,8 +13,18 @@ fi
 source "$EMSDK_ENV"
 
 mkdir -p "$ROOT_DIR/dist"
+FFMPEG_DIR="$ROOT_DIR/build/ffmpeg"
+if [[ ! -f "$FFMPEG_DIR/lib/libavcodec.a" ]]; then
+  echo "FFmpeg not built yet. Run: bash scripts/build-ffmpeg.sh" >&2
+  exit 1
+fi
+
 em++ "$ROOT_DIR/src/index.cpp" -o "$ROOT_DIR/dist/index.js" \
   --bind \
+  -I"$FFMPEG_DIR/include" \
+  -L"$FFMPEG_DIR/lib" \
+  -lavformat -lavcodec -lswscale -lswresample -lavutil \
+  -sALLOW_MEMORY_GROWTH=1 \
   -sMODULARIZE=1 \
   -sEXPORT_ES6=1 \
   -O3
